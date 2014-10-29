@@ -3,9 +3,15 @@ package de.codepotion.cv;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import de.codepotion.cv.filters.DummyFilter;
+import de.codepotion.cv.filters.GrayscaleFilter;
+import de.codepotion.cv.filters.ImageFilter;
 import de.codepotion.cv.sources.WebcamSource;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -17,18 +23,25 @@ public class Controller {
 	ImageView webcamImageView;
 	@FXML
 	AnchorPane webcamPane;
-
 	@FXML
 	ImageView filteredImageView;
 	@FXML
 	AnchorPane filteredPane;
 
+	@FXML
+	ChoiceBox<ImageFilter> filterBox;
+	ObservableList<ImageFilter> availableFilters = FXCollections.observableArrayList();
+	
 	WebcamSource mySource;
 	Timer backgroundServ;
 	boolean isCapturing = false;
-
+	ImageFilter activeFilter;
+	
 	public Controller() {
 		mySource = new WebcamSource();
+		activeFilter = new GrayscaleFilter();
+		availableFilters.add(new DummyFilter());
+		availableFilters.add(new GrayscaleFilter());
 	}
 
 	public void initialize() {
@@ -38,6 +51,8 @@ public class Controller {
 		filteredImageView.fitHeightProperty().bind(
 				filteredPane.heightProperty());
 		filteredImageView.fitWidthProperty().bind(filteredPane.widthProperty());
+
+		filterBox.setItems(availableFilters);
 	}
 
 	public void setWebcamImage(Image input) {
@@ -64,12 +79,13 @@ public class Controller {
 				public void run() {
 					// get Image before
 					Image temp = mySource.getFrame();
+					Image filtered = activeFilter.doFilter(temp);
 					Platform.runLater(new Runnable() {
 
 						@Override
 						public void run() {
 							setWebcamImage(temp);
-							setFilterImage(temp);
+							setFilterImage(filtered);
 						}
 					});
 
