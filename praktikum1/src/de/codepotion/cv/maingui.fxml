@@ -41,7 +41,7 @@
                <top>
                   <HBox alignment="TOP_CENTER" prefHeight="35.0" prefWidth="296.0" spacing="5.0" BorderPane.alignment="TOP_CENTER">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#setImage" text="Button" />
+                        <Button mnemonicParsing="false" onAction="#toggleCapture" text="toggleCapture" />
                         <ChoiceBox prefWidth="150.0" />
                      </children>
                   </HBox>

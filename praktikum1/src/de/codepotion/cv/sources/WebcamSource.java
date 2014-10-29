@@ -21,9 +21,7 @@ public class WebcamSource {
 	public Image getFrame()
 	{
 		Mat newFrame = new Mat();
-		myCamera.open(0);
 		myCamera.read(newFrame);
-		myCamera.release();
 		return mat2Image(newFrame);
 	}
 	
