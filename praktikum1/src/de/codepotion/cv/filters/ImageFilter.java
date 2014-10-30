@@ -1,12 +1,12 @@
 package de.codepotion.cv.filters;
 
 import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 
 public abstract class ImageFilter {
 
 	protected String filterName = "default name";
-	private AnchorPane configuration = new AnchorPane();
+	protected BorderPane configuration = new BorderPane();
 	
 	public ImageFilter()
 	{
@@ -20,7 +20,7 @@ public abstract class ImageFilter {
 		return filterName;
 	}
 	
-	public AnchorPane getConfiguration()
+	public BorderPane getConfiguration()
 	{
 		return configuration;
 	}
