@@ -17,6 +17,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 
 public class Controller {
 
@@ -33,6 +34,9 @@ public class Controller {
 	@FXML
 	ChoiceBox<ImageFilter> filterBox;
 	ObservableList<ImageFilter> availableFilters = FXCollections.observableArrayList();
+	
+	@FXML
+	BorderPane configurationPane;
 	
 	WebcamSource mySource;
 	Timer backgroundServ;
@@ -55,6 +59,7 @@ public class Controller {
 
 		filterBox.setItems(availableFilters);
 		filterBox.getSelectionModel().selectFirst();
+		configurationPane.setCenter(activeFilter.getConfiguration());
 		bindFilterBox();
 	}
 
@@ -65,6 +70,7 @@ public class Controller {
 			@Override
 			public void changed(ObservableValue<? extends ImageFilter> observable, ImageFilter oldValue, ImageFilter newValue) {
 				activeFilter = newValue;
+				configurationPane.setCenter(activeFilter.getConfiguration());
 			}
 		});
 	}

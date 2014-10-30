@@ -34,7 +34,7 @@
                   </BorderPane>
                </children>
             </AnchorPane>
-            <BorderPane prefHeight="200.0" prefWidth="200.0">
+            <BorderPane fx:id="configurationPane" prefHeight="200.0" prefWidth="200.0">
                <center>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
                </center>
