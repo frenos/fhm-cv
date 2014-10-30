@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="324.0" prefWidth="478.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <SplitPane fx:id="SplitPanefix" dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+            <ListView fx:id="availablelist" prefHeight="200.0" prefWidth="200.0" />
+            <ListView fx:id="activelist" prefHeight="200.0" prefWidth="200.0" />
+        </items>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <effect>
+            <DropShadow />
+         </effect>
+      </SplitPane>
+   </center>
+   <top>
+      <HBox alignment="CENTER" prefHeight="45.0" prefWidth="481.0" spacing="5.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="addButton" mnemonicParsing="false" text="addFilter" />
+            <Button fx:id="removeButton" mnemonicParsing="false" text="removeFilter" />
+            <Button fx:id="configButton" mnemonicParsing="false" text="configureFilter" />
+         </children>
+         <effect>
+            <DropShadow />
+         </effect>
+      </HBox>
+   </top>
+</BorderPane>
