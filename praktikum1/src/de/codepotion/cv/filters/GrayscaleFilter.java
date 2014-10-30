@@ -14,7 +14,7 @@ public class GrayscaleFilter extends ImageFilter {
 	}
 
 	@Override
-	public Image doFilter(Image input) {
+	public Image useFilter(Image input) {
 		Mat inputMat = ImageHelper.image2Mat(input);
 		Mat outputMat = new Mat(inputMat.rows(),inputMat.cols(),CvType.CV_8UC1);
 		Imgproc.cvtColor(inputMat, outputMat, Imgproc.COLOR_BGR2GRAY);

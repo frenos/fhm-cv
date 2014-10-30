@@ -10,7 +10,7 @@ public class DummyFilter extends ImageFilter {
 	}
 
 	@Override
-	public Image doFilter(Image input) {
+	public Image useFilter(Image input) {
 		return ImageHelper.mat2Image(ImageHelper.image2Mat(input));
 	}
 

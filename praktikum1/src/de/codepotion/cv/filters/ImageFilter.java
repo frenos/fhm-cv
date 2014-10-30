@@ -13,7 +13,7 @@ public abstract class ImageFilter {
 		
 	}
 	
-	public abstract Image doFilter(Image input);
+	public abstract Image useFilter(Image input);
 	
 	public String getName()
 	{

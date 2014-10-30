@@ -8,6 +8,8 @@ import de.codepotion.cv.filters.GrayscaleFilter;
 import de.codepotion.cv.filters.ImageFilter;
 import de.codepotion.cv.sources.WebcamSource;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -39,9 +41,8 @@ public class Controller {
 	
 	public Controller() {
 		mySource = new WebcamSource();
-		activeFilter = new GrayscaleFilter();
-		availableFilters.add(new DummyFilter());
-		availableFilters.add(new GrayscaleFilter());
+		availableFilters.addAll(FilterManager.getInstance().getFilters());
+		activeFilter = availableFilters.get(0);
 	}
 
 	public void initialize() {
@@ -53,8 +54,21 @@ public class Controller {
 		filteredImageView.fitWidthProperty().bind(filteredPane.widthProperty());
 
 		filterBox.setItems(availableFilters);
+		filterBox.getSelectionModel().selectFirst();
+		bindFilterBox();
 	}
 
+	public void bindFilterBox()
+	{
+		filterBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ImageFilter>() {
+
+			@Override
+			public void changed(ObservableValue<? extends ImageFilter> observable, ImageFilter oldValue, ImageFilter newValue) {
+				activeFilter = newValue;
+			}
+		});
+	}
+	
 	public void setWebcamImage(Image input) {
 		webcamImageView.setImage(input);
 	}
@@ -79,7 +93,7 @@ public class Controller {
 				public void run() {
 					// get Image before
 					Image temp = mySource.getFrame();
-					Image filtered = activeFilter.doFilter(temp);
+					Image filtered = activeFilter.useFilter(temp);
 					Platform.runLater(new Runnable() {
 
 						@Override
