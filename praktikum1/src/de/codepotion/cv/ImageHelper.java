@@ -2,9 +2,6 @@ package de.codepotion.cv;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
-import java.awt.image.DataBufferInt;
-import java.nio.ByteBuffer;
-import java.nio.IntBuffer;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;

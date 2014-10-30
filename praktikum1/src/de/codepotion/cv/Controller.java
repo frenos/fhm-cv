@@ -3,8 +3,6 @@ package de.codepotion.cv;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import de.codepotion.cv.filters.DummyFilter;
-import de.codepotion.cv.filters.GrayscaleFilter;
 import de.codepotion.cv.filters.ImageFilter;
 import de.codepotion.cv.sources.WebcamSource;
 import javafx.application.Platform;
