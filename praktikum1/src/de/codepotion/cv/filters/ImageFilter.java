@@ -1,6 +1,7 @@
 package de.codepotion.cv.filters;
 
-import javafx.scene.image.Image;
+import org.opencv.core.Mat;
+
 import javafx.scene.layout.BorderPane;
 
 public abstract class ImageFilter {
@@ -13,7 +14,7 @@ public abstract class ImageFilter {
 		
 	}
 	
-	public abstract Image useFilter(Image input);
+	public abstract Mat useFilter(Mat input);
 	
 	public String getName()
 	{
@@ -23,5 +24,11 @@ public abstract class ImageFilter {
 	public BorderPane getConfiguration()
 	{
 		return configuration;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return filterName;
 	}
 }

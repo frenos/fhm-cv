@@ -7,13 +7,11 @@ import org.opencv.core.Mat;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
-import de.codepotion.cv.ImageHelper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.image.Image;
 
 public class GaussianBlurFilter extends ImageFilter{
 	
@@ -33,13 +31,11 @@ public class GaussianBlurFilter extends ImageFilter{
 	}
 
 	@Override
-	public Image useFilter(Image input) {
-		Mat inputMat = ImageHelper.image2Mat(input);
-		Mat outputMat = new Mat(inputMat.rows(), inputMat.cols(), inputMat.type());
+	public Mat useFilter(Mat input) {
+		Mat outputMat = new Mat(input.rows(), input.cols(), input.type());
 		
-		Imgproc.GaussianBlur(inputMat, outputMat, new Size(0,0), sigmaX, sigmaY);
-		
-		return ImageHelper.mat2Image(outputMat);
+		Imgproc.GaussianBlur(input, outputMat, new Size(0,0), sigmaX, sigmaY);
+		return outputMat;
 	}
 	
 	public void buildGui()

@@ -1,7 +1,6 @@
 package de.codepotion.cv.filters;
 
-import de.codepotion.cv.ImageHelper;
-import javafx.scene.image.Image;
+import org.opencv.core.Mat;
 
 public class DummyFilter extends ImageFilter {
 
@@ -10,8 +9,8 @@ public class DummyFilter extends ImageFilter {
 	}
 
 	@Override
-	public Image useFilter(Image input) {
-		return ImageHelper.mat2Image(ImageHelper.image2Mat(input));
+	public Mat useFilter(Mat input) {
+		return input;
 	}
 
 }

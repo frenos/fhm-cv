@@ -3,6 +3,8 @@ package de.codepotion.cv;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.opencv.core.Mat;
+
 import de.codepotion.cv.filters.ImageFilter;
 import de.codepotion.cv.sources.WebcamSource;
 import javafx.application.Platform;
@@ -96,13 +98,14 @@ public class Controller {
 				@Override
 				public void run() {
 					// get Image before
-					Image temp = mySource.getFrame();
-					Image filtered = activeFilter.useFilter(temp);
+					Mat temp = mySource.getFrame();
+					Image filtered = ImageHelper.mat2Image(activeFilter.useFilter(temp));
+					Image webcam = ImageHelper.mat2Image(temp);
 					Platform.runLater(new Runnable() {
 
 						@Override
 						public void run() {
-							setWebcamImage(temp);
+							setWebcamImage(webcam);
 							setFilterImage(filtered);
 						}
 					});

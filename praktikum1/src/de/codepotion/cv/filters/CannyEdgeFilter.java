@@ -5,13 +5,11 @@ import java.io.IOException;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 
-import de.codepotion.cv.ImageHelper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.image.Image;
 
 public class CannyEdgeFilter extends ImageFilter {
 
@@ -31,11 +29,10 @@ public class CannyEdgeFilter extends ImageFilter {
 	}
 
 	@Override
-	public Image useFilter(Image input) {
-		Mat inputMat = ImageHelper.image2Mat(input);
-		Mat outputMat = new Mat(inputMat.rows(), inputMat.cols(), inputMat.type());
-		Imgproc.Canny(inputMat, outputMat, minThreshold, maxThreshold);
-		return ImageHelper.mat2Image(outputMat);
+	public Mat useFilter(Mat input) {
+		Mat outputMat = new Mat(input.rows(), input.cols(), input.type());
+		Imgproc.Canny(input, outputMat, minThreshold, maxThreshold);
+		return outputMat;
 	}
 
 	public void buildGui()

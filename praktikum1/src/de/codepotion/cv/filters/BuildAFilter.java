@@ -2,6 +2,8 @@ package de.codepotion.cv.filters;
 
 import java.io.IOException;
 
+import org.opencv.core.Mat;
+
 import de.codepotion.cv.FilterManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,7 +13,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -88,9 +89,10 @@ public class BuildAFilter extends ImageFilter {
 	}
 
 	@Override
-	public Image useFilter(Image input) {
-		ObservableList<ImageFilter> tempList = activeFilters;
-		Image temp = input;
+	public Mat useFilter(Mat input) {
+		ObservableList<ImageFilter> tempList= FXCollections.observableArrayList();
+		tempList.addAll(activeFilters);
+		Mat temp = input;
 		for (ImageFilter currentFilter : tempList) {
 			temp = currentFilter.useFilter(temp);
 		}
