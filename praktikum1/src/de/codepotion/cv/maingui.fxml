@@ -29,7 +29,7 @@
                         </SplitPane>
                      </center>
                      <top>
-                        <ChoiceBox prefWidth="150.0" BorderPane.alignment="CENTER" />
+                        <ChoiceBox fx:id="inputBox" prefWidth="150.0" BorderPane.alignment="CENTER" />
                      </top>
                   </BorderPane>
                </children>
