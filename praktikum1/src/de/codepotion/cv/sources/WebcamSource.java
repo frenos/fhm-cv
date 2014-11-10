@@ -22,7 +22,6 @@ public class WebcamSource implements InputSource{
 
 	@Override
 	public void reload() {
-		myCamera = new VideoCapture(0);
 	}
 	
 	public String toString()
