@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="324.0" prefWidth="478.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Slider fx:id="binNumberSlider" max="255.0" min="1.0" minorTickCount="1" prefHeight="16.0" prefWidth="353.0" showTickLabels="true" showTickMarks="true" value="8.0" />
+            <TextField fx:id="binNumberText" prefHeight="25.0" prefWidth="67.0">
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin></TextField>
+         </children>
+      </HBox>
+   </center>
+</BorderPane>
