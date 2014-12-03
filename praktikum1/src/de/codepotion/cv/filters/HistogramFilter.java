@@ -80,7 +80,10 @@ public class HistogramFilter extends ImageFilter{
 		int hist_h = 600;
 		//offset zum rand damit max und min nicht direkt auf dem bildrand liegen
 		int offset = 20;
+		//Weite einer gesammten Kategorie (B+G+R)
 		int bin_w =(int) Math.round((double)hist_w/number_bins);
+		//Weite einer einzelnen Farbe
+		int bin_column = (int) Math.round((double)bin_w/3);
 		
 		Mat outputImage = new Mat(hist_h+2*offset, hist_w, CvType.CV_8UC3, new Scalar(0,0,0));
 		
@@ -88,18 +91,12 @@ public class HistogramFilter extends ImageFilter{
 		Core.normalize(g_histogram, g_histogram, 0,hist_h, Core.NORM_MINMAX);
 		Core.normalize(r_histogram, r_histogram, 0,hist_h, Core.NORM_MINMAX);
 		
-		for (int i = 1; i <= number_bins; i++)
+		for (int i = 0; i < number_bins; i++)
 		{
-			Core.line(outputImage, new Point(bin_w*(i-1), hist_h - b_histogram.get(i-1,0)[0]+offset),
-								   new Point(bin_w*i   , hist_h - b_histogram.get(i-1,0)[0]+offset), 
-								   new Scalar(255,0,0),2);
-			
-			double Heighttemp = g_histogram.get(i-1,0)[0];
-			Core.line(outputImage, new Point(bin_w*(i-1), hist_h - g_histogram.get(i-1,0)[0]+offset),new Point(bin_w*i   , hist_h - g_histogram.get(i-1,0)[0]+offset), new Scalar(0,255,0),2);
-			Core.line(outputImage, new Point(bin_w*(i-1), hist_h - r_histogram.get(i-1,0)[0]+offset),new Point(bin_w*i   , hist_h - r_histogram.get(i-1,0)[0]+offset), new Scalar(0,0,255),2);
-		
+			Core.rectangle(outputImage, new Point(bin_w*i, offset+hist_h), new Point(bin_w*i+bin_column   , hist_h - b_histogram.get(i,0)[0]+offset), new Scalar(255,0,0), Core.FILLED);
+			Core.rectangle(outputImage, new Point(bin_w*i+bin_column, offset+hist_h), new Point(bin_w*i+bin_column*2   , hist_h - g_histogram.get(i,0)[0]+offset), new Scalar(0,255,0), Core.FILLED);
+			Core.rectangle(outputImage, new Point(bin_w*i+bin_column*2, offset+hist_h), new Point(bin_w*i+bin_column*3   , hist_h - r_histogram.get(i,0)[0]+offset), new Scalar(0,0,255), Core.FILLED);
 		}
-		
 		
 		return outputImage;
 	}
