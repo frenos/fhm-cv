@@ -93,9 +93,12 @@ public class HistogramFilter extends ImageFilter{
 		
 		for (int i = 0; i < number_bins; i++)
 		{
-			Core.rectangle(outputImage, new Point(bin_w*i, offset+hist_h), new Point(bin_w*i+bin_column   , hist_h - b_histogram.get(i,0)[0]+offset), new Scalar(255,0,0), Core.FILLED);
-			Core.rectangle(outputImage, new Point(bin_w*i+bin_column, offset+hist_h), new Point(bin_w*i+bin_column*2   , hist_h - g_histogram.get(i,0)[0]+offset), new Scalar(0,255,0), Core.FILLED);
-			Core.rectangle(outputImage, new Point(bin_w*i+bin_column*2, offset+hist_h), new Point(bin_w*i+bin_column*3   , hist_h - r_histogram.get(i,0)[0]+offset), new Scalar(0,0,255), Core.FILLED);
+			if(b_histogram.get(i,0)[0]>0)
+				Core.rectangle(outputImage, new Point(bin_w*i, offset+hist_h), new Point(bin_w*i+bin_column   , hist_h - b_histogram.get(i,0)[0]+offset), new Scalar(255,0,0), Core.FILLED);
+			if(g_histogram.get(i,0)[0]>0)
+				Core.rectangle(outputImage, new Point(bin_w*i+bin_column, offset+hist_h), new Point(bin_w*i+bin_column*2   , hist_h - g_histogram.get(i,0)[0]+offset), new Scalar(0,255,0), Core.FILLED);
+			if(r_histogram.get(i,0)[0]>0)
+				Core.rectangle(outputImage, new Point(bin_w*i+bin_column*2, offset+hist_h), new Point(bin_w*i+bin_column*3   , hist_h - r_histogram.get(i,0)[0]+offset), new Scalar(0,0,255), Core.FILLED);
 		}
 		
 		return outputImage;
