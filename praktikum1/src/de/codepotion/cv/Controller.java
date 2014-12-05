@@ -71,9 +71,9 @@ public class Controller {
 		webcamImageView.fitHeightProperty().bind(webcamPane.heightProperty());
 		webcamImageView.fitWidthProperty().bind(webcamPane.widthProperty());
 
-		webcamImageView.setOnMouseDragged(mouseHandler);
-		webcamImageView.setOnMousePressed(mouseHandler);
-		webcamImageView.setOnMouseReleased(mouseHandler);
+		webcamImageView.setOnMouseDragged(mouseDragHandler);
+		webcamImageView.setOnMousePressed(mouseClickHandler);
+		webcamImageView.setOnMouseReleased(mouseReleaseHandler);
 
 		filteredImageView.fitHeightProperty().bind(filteredPane.heightProperty());
 		filteredImageView.fitWidthProperty().bind(filteredPane.widthProperty());
@@ -89,53 +89,64 @@ public class Controller {
 		bindFilterBox();
 	}
 
-	EventHandler<MouseEvent> mouseHandler = new EventHandler<MouseEvent>() {
+	EventHandler<MouseEvent> mouseClickHandler = new EventHandler<MouseEvent>() {
 
 		@Override
 		public void handle(MouseEvent event) {
-
-			if (event.getEventType() == MouseEvent.MOUSE_PRESSED && event.isPrimaryButtonDown()) {
+			if (event.getButton() == MouseButton.PRIMARY) {
 				guiSelection.xProperty().set(event.getX());
 				guiSelection.yProperty().set(event.getY());
-			} else if (event.getEventType() == MouseEvent.MOUSE_DRAGGED) {
-				guiSelection.widthProperty().set(Math.abs(guiSelection.xProperty().get() - event.getX()));
-				guiSelection.heightProperty().set(Math.abs(guiSelection.yProperty().get() - event.getY()));
-			} else if (event.getEventType() == MouseEvent.MOUSE_RELEASED) {
-				if (event.getButton() == MouseButton.PRIMARY) {
-					double scaleWidthFactor = webcamImageView.getImage().getWidth() / webcamImageView.getBoundsInLocal().getWidth();
-					double scaleHeightFactor = webcamImageView.getImage().getHeight() / webcamImageView.getBoundsInLocal().getHeight();
+			} else if (event.getButton() == MouseButton.SECONDARY) {
+				selection = new Rect();
+				guiSelection.setWidth(0);
+				guiSelection.setHeight(0);
+			}
+		}
+	};
 
-					double xValue = guiSelection.xProperty().intValue() * scaleWidthFactor;
-					if (xValue == 0) {
-						xValue = 1;
-					} else if (xValue > webcamImageView.getImage().getWidth()) {
-						xValue = webcamImageView.getImage().getWidth();
-					}
+	EventHandler<MouseEvent> mouseDragHandler = new EventHandler<MouseEvent>() {
+		//TODO: allow user to drag left/up, too
+		@Override
+		public void handle(MouseEvent event) {
 
-					double yValue = guiSelection.yProperty().intValue() * scaleHeightFactor;
-					if (yValue == 0) {
-						yValue = 1;
-					} else if (yValue > webcamImageView.getImage().getHeight()) {
-						yValue = webcamImageView.getImage().getHeight();
-					}
+			guiSelection.widthProperty().set(Math.abs(guiSelection.xProperty().get() - event.getX()));
+			guiSelection.heightProperty().set(Math.abs(guiSelection.yProperty().get() - event.getY()));
+		}
+	};
 
-					double widthScaled = guiSelection.widthProperty().intValue() * scaleWidthFactor;
-					if (xValue + widthScaled > webcamImageView.getImage().getWidth()) {
-						widthScaled = webcamImageView.getImage().getWidth() - xValue;
-					}
+	EventHandler<MouseEvent> mouseReleaseHandler = new EventHandler<MouseEvent>() {
 
-					double heightScaled = guiSelection.heightProperty().intValue() * scaleHeightFactor;
-					if (yValue + heightScaled > webcamImageView.getImage().getHeight()) {
-						heightScaled = webcamImageView.getImage().getHeight() - yValue;
-					}
-					selection = new Rect((int) xValue, (int) yValue, (int) widthScaled, (int) heightScaled);
+		@Override
+		public void handle(MouseEvent event) {
+			if (event.getButton() == MouseButton.PRIMARY) {
+				double scaleWidthFactor = webcamImageView.getImage().getWidth() / webcamImageView.getBoundsInLocal().getWidth();
+				double scaleHeightFactor = webcamImageView.getImage().getHeight()
+						/ webcamImageView.getBoundsInLocal().getHeight();
+
+				double xValue = guiSelection.xProperty().intValue() * scaleWidthFactor;
+				if (xValue == 0) {
+					xValue = 1;
+				} else if (xValue > webcamImageView.getImage().getWidth()) {
+					xValue = webcamImageView.getImage().getWidth();
 				}
-				else if (event.getButton() == MouseButton.SECONDARY)
-				{
-					selection = new Rect();
-					guiSelection.setWidth(0);
-					guiSelection.setHeight(0);
+
+				double yValue = guiSelection.yProperty().intValue() * scaleHeightFactor;
+				if (yValue == 0) {
+					yValue = 1;
+				} else if (yValue > webcamImageView.getImage().getHeight()) {
+					yValue = webcamImageView.getImage().getHeight();
 				}
+
+				double widthScaled = guiSelection.widthProperty().intValue() * scaleWidthFactor;
+				if (xValue + widthScaled > webcamImageView.getImage().getWidth()) {
+					widthScaled = webcamImageView.getImage().getWidth() - xValue;
+				}
+
+				double heightScaled = guiSelection.heightProperty().intValue() * scaleHeightFactor;
+				if (yValue + heightScaled > webcamImageView.getImage().getHeight()) {
+					heightScaled = webcamImageView.getImage().getHeight() - yValue;
+				}
+				selection = new Rect((int) xValue, (int) yValue, (int) widthScaled, (int) heightScaled);
 			}
 		}
 	};
