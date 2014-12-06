@@ -43,6 +43,7 @@ public class Controller {
 	ObservableList<InputSource> availableInputs = FXCollections.observableArrayList();
 
 	Rectangle guiSelection = new Rectangle();
+	double startX, startY;
 
 	@FXML
 	ChoiceBox<ImageFilter> filterBox;
@@ -94,6 +95,9 @@ public class Controller {
 		@Override
 		public void handle(MouseEvent event) {
 			if (event.getButton() == MouseButton.PRIMARY) {
+				startX = event.getX();
+				startY = event.getY();
+
 				guiSelection.xProperty().set(event.getX());
 				guiSelection.yProperty().set(event.getY());
 			} else if (event.getButton() == MouseButton.SECONDARY) {
@@ -105,12 +109,13 @@ public class Controller {
 	};
 
 	EventHandler<MouseEvent> mouseDragHandler = new EventHandler<MouseEvent>() {
-		//TODO: allow user to drag left/up, too
 		@Override
 		public void handle(MouseEvent event) {
+			guiSelection.xProperty().set(Math.min(startX, event.getX()));
+			guiSelection.yProperty().set(Math.min(startY, event.getY()));
 
-			guiSelection.widthProperty().set(Math.abs(guiSelection.xProperty().get() - event.getX()));
-			guiSelection.heightProperty().set(Math.abs(guiSelection.yProperty().get() - event.getY()));
+			guiSelection.widthProperty().set(Math.abs(startX - event.getX()));
+			guiSelection.heightProperty().set(Math.abs(startY - event.getY()));
 		}
 	};
 
