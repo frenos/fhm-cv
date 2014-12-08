@@ -9,6 +9,8 @@ import org.opencv.core.Rect;
 import de.codepotion.cv.filters.ImageFilter;
 import de.codepotion.cv.sources.ImageSource;
 import de.codepotion.cv.sources.InputSource;
+import de.codepotion.cv.sources.KITTISource;
+import de.codepotion.cv.sources.VideoSource;
 import de.codepotion.cv.sources.WebcamSource;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -159,6 +161,9 @@ public class Controller {
 	public void fillAndBindInputBox() {
 		availableInputs.add(new ImageSource());
 		availableInputs.add(new WebcamSource());
+		availableInputs.add(new KITTISource());
+		availableInputs.add(new VideoSource());
+		
 		inputBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<InputSource>() {
 
 			@Override
@@ -222,7 +227,7 @@ public class Controller {
 					});
 
 				}
-			}, 1, 25);
+			}, 1, 250);
 		}
 	}
 }

@@ -19,7 +19,6 @@ public class ImageSource implements InputSource {
 
 	@Override
 	public void reload() {
-		// TODO Auto-generated method stub
 		FileChooser fc = new FileChooser();
 		File file = fc.showOpenDialog(null);
 		if ( file != null)
